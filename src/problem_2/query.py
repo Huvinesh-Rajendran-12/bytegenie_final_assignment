@@ -4,7 +4,10 @@ import polars as pl
 from datetime import datetime
 from typing import List, Tuple, Union
 
-def query_data(conn, filter_arguments: List[List[Union[str, List[str]]]], output_columns: List[str]) -> pl.DataFrame:
+
+def query_data(
+    conn, filter_arguments: List[List[Union[str, List[str]]]], output_columns: List[str]
+) -> pl.DataFrame:
     cur = conn.cursor()
 
     # Base query with placeholders for columns and joins
@@ -61,31 +64,59 @@ def query_data(conn, filter_arguments: List[List[Union[str, List[str]]]], output
     conditions = []
     params = []
     for col, op, val in filter_arguments:
-        table_alias = "e" if col.startswith("event_") else "c" if col.startswith("company_") else "p"
+        table_alias = (
+            "e"
+            if col.startswith("event_")
+            else "c"
+            if col.startswith("company_")
+            else "p"
+        )
 
         if op == "includes":
             if isinstance(val, list):
                 if len(val) == 1:
-                    conditions.append(sql.SQL("AND {}.{} = %s").format(sql.Identifier(table_alias), sql.Identifier(col)))
+                    conditions.append(
+                        sql.SQL("AND {}.{} = %s").format(
+                            sql.Identifier(table_alias), sql.Identifier(col)
+                        )
+                    )
                     params.append(val[0])
                 else:
-                    conditions.append(sql.SQL("AND {}.{} = ANY(%s)").format(sql.Identifier(table_alias), sql.Identifier(col)))
+                    conditions.append(
+                        sql.SQL("AND {}.{} = ANY(%s)").format(
+                            sql.Identifier(table_alias), sql.Identifier(col)
+                        )
+                    )
                     params.append(val)
             else:
-                conditions.append(sql.SQL("AND {}.{} = %s").format(sql.Identifier(table_alias), sql.Identifier(col)))
+                conditions.append(
+                    sql.SQL("AND {}.{} = %s").format(
+                        sql.Identifier(table_alias), sql.Identifier(col)
+                    )
+                )
                 params.append(val)
         elif op in ["greater-than-equal-to", "less-than-equal-to"]:
             if col == "event_start_date":
                 try:
-                    date_val = datetime.strptime(val, '%Y-%m-%d').date()
+                    date_val = datetime.strptime(val, "%Y-%m-%d").date()
                 except ValueError:
-                    raise ValueError(f"Invalid date format for {col}: {val}. Expected format: YYYY-MM-DD")
+                    raise ValueError(
+                        f"Invalid date format for {col}: {val}. Expected format: YYYY-MM-DD"
+                    )
                 op_symbol = ">=" if op == "greater-than-equal-to" else "<="
-                conditions.append(sql.SQL(f"AND {{}}::date {op_symbol} %s").format(sql.Identifier(table_alias, col)))
+                conditions.append(
+                    sql.SQL(f"AND {{}}::date {op_symbol} %s").format(
+                        sql.Identifier(table_alias, col)
+                    )
+                )
                 params.append(date_val)
             else:
                 op_symbol = ">=" if op == "greater-than-equal-to" else "<="
-                conditions.append(sql.SQL(f"AND {{}} {op_symbol} %s").format(sql.Identifier(table_alias, col)))
+                conditions.append(
+                    sql.SQL(f"AND {{}} {op_symbol} %s").format(
+                        sql.Identifier(table_alias, col)
+                    )
+                )
                 params.append(val)
         else:
             raise ValueError(f"Unsupported operation: {op}")

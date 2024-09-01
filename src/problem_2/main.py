@@ -27,7 +27,17 @@ def main():
         ["company_industry", "includes", ["Software", "IT"]],
     ]
 
-    output_columns = ['event_city', 'event_name', 'event_country', 'company_industry', 'company_name', 'company_url', 'person_first_name', 'person_last_name', 'person_seniority']
+    output_columns = [
+        "event_city",
+        "event_name",
+        "event_country",
+        "company_industry",
+        "company_name",
+        "company_url",
+        "person_first_name",
+        "person_last_name",
+        "person_seniority",
+    ]
 
     result_df = query_data(conn, filter_arguments, output_columns)
     print(result_df)

@@ -11,13 +11,13 @@ def main():
 
     # Example 1: Find events attended by directors of energy companies
     filtered_data = data_graph.filter(
-        company_industry=['energy'],
-        person_seniority=['director']
+        company_industry=["energy"], person_seniority=["director"]
     )
 
     for df_name, df in filtered_data.items():
         print(f"\n{df_name}:")
         print(df)
+
 
 if __name__ == "__main__":
     main()

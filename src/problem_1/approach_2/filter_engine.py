@@ -4,6 +4,7 @@ from typing import Dict, List, Any, Optional, Set
 import time
 from problem_1 import DataGraph, Dataset
 
+
 class FilterEngine:
     def __init__(self, dataset: Dataset):
         self.data_graph = DataGraph(dataset)
@@ -49,7 +50,7 @@ class FilterEngine:
         results = {}
         for node in filtered_nodes:
             node_data = self.graph.nodes[node]
-            entity_type = node_data['entity_type']
+            entity_type = node_data["entity_type"]
             if entity_type not in results:
                 results[entity_type] = []
             results[entity_type].append(node_data)
@@ -60,12 +61,19 @@ class FilterEngine:
 
         return results
 
-    def _display_filtered_results(self, results: Dict[str, pl.DataFrame], filters: Dict[str, Any], execution_time: float):
+    def _display_filtered_results(
+        self,
+        results: Dict[str, pl.DataFrame],
+        filters: Dict[str, Any],
+        execution_time: float,
+    ):
         print("\n--- Filter Criteria ---")
         for key, value in filters.items():
             print(f"{key}: {value}")
 
-        print(f"\n--- Results Summary (Execution Time: {execution_time:.4f} seconds) ---")
+        print(
+            f"\n--- Results Summary (Execution Time: {execution_time:.4f} seconds) ---"
+        )
         total_items = sum(df.height for df in results.values())
         print(f"Total items found: {total_items}")
         for entity_type, df in results.items():
@@ -79,10 +87,16 @@ class FilterEngine:
             else:
                 print("No results found.")
 
-        print("\n" + "="*50 + "\n")
+        print("\n" + "=" * 50 + "\n")
 
     def _get_id_column(self, df: pl.DataFrame) -> str:
-        id_columns = ["event_url", "company_url", "person_id", "person_company_url", "past_company_url"]
+        id_columns = [
+            "event_url",
+            "company_url",
+            "person_id",
+            "person_company_url",
+            "past_company_url",
+        ]
         for col in id_columns:
             if col in df.columns:
                 return col
