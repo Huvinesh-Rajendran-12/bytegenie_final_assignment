@@ -30,7 +30,7 @@ def query_data(
             FROM company_attributes
             GROUP BY company_url
         ),
-        person_data AS (
+        people_data AS (
             SELECT person_id,
                 MAX(CASE WHEN attribute = 'person_first_name' THEN value END) AS person_first_name,
                 MAX(CASE WHEN attribute = 'person_last_name' THEN value END) AS person_last_name,
@@ -44,7 +44,7 @@ def query_data(
         SELECT {columns}
         FROM event_data e
         LEFT JOIN company_data c ON e.event_url = c.company_event_url
-        LEFT JOIN person_data p ON c.company_url = p.person_company_url
+        LEFT JOIN people_data p ON c.company_url = p.person_company_url
         WHERE 1=1
         {conditions}
     """)

@@ -1,3 +1,1 @@
-# bytegenie-final-assignment
-
-Describe your project here.
+# Bytegenie Final Assignment
