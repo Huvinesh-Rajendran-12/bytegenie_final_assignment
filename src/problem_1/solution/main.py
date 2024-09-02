@@ -1,10 +1,11 @@
 from problem_1 import Dataset, DataframeFilter
 import time
+import argparse
 
 import polars as pl
 
 
-def main():
+def main(add_new_dataframe: bool):
     dataset = Dataset()
     dataframes = dataset.get()
 
@@ -19,14 +20,15 @@ def main():
         },
     }
 
-    past_employments_df = pl.DataFrame({
-            "person_id": [f"person-{i}" for i in range(1, 51) for _ in range(2)],
-            "company_url": [f"company-{i}" for i in range(1, 101)],
-            "employment_start_date": [pl.date(2010 + i // 10, 1, 1) for i in range(100)],
-            "employment_end_date": [pl.date(2015 + i // 10, 12, 31) for i in range(100)]
-        })
+    if add_new_dataframe:
+        past_employments_df = pl.DataFrame({
+                "person_id": [f"person-{i}" for i in range(1, 51) for _ in range(2)],
+                "company_url": [f"company-{i}" for i in range(1, 101)],
+                "employment_start_date": [pl.date(2010 + i // 10, 1, 1) for i in range(100)],
+                "employment_end_date": [pl.date(2015 + i // 10, 12, 31) for i in range(100)]
+            })
 
-    dataframes["past_employments"] = past_employments_df
+        dataframes["past_employments"] = past_employments_df
     filter_system = DataframeFilter(dataframes)
 
     start_time = time.time()
@@ -42,4 +44,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+
+    parser = argparse.ArgumentParser(description='Run the main function with optional dataframe addition.')
+    parser.add_argument('--add_new_dataframe', action='store_true', help='Add a new dataframe')
+    args = parser.parse_args()
+
+    main(args.add_new_dataframe)

@@ -1,5 +1,4 @@
 from .data import Dataset
-from .approach_1.filter import DataframeFilter
-from .approach_2.graph_filter import GraphFilter
+from .solution.filter import DataframeFilter
 
-__all__ = ["Dataset", "DataframeFilter", "GraphFilter"]
+__all__ = ["Dataset", "DataframeFilter"]
