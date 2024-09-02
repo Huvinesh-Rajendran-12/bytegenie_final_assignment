@@ -127,11 +127,3 @@ print(result_df)
   ```
 
 Make sure to set up the necessary environment variables for database connection in Problem 2.
-
-## Contributing
-
-Please refer to the project's coding standards and contribution guidelines before submitting pull requests.
-
-## License
-
-[Add your chosen license here]
