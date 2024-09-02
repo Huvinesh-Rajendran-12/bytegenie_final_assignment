@@ -1,4 +1,4 @@
-# Data Filtering and Querying Project
+# ByteGenie Final Assignment
 
 This project implements efficient data filtering and querying mechanisms for interconnected datasets related to events, companies, and people.
 
