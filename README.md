@@ -67,6 +67,15 @@ conditions = {
 filtered_dataframes = filter_system.filter_dataframes(conditions)
 ```
 
+Running with Additional Dataframe:
+To run the filtering system with an additional "past_employments" dataframe, use the `--add_new_dataframe` flag:
+
+```
+python -m src.problem_1.solution.main --add_new_dataframe
+```
+
+This flag adds a new dataframe to test the system's ability to handle additional interconnected data.
+
 ## Problem 2: SQL Querying
 
 The second part of the project focuses on querying data from a PostgreSQL database with a specific schema.
