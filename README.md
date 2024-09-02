@@ -126,6 +126,8 @@ print(result_df)
 
 ## Running the Project
 
+Navigate to `src` directory and then run the following commands.
+
 - For Problem 1:
   ```
   python -m src.problem_1.solution.main
